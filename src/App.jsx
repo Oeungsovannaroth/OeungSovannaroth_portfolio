@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const navLinks = [
   { href: "#home", label: "Home", icon: "fa-solid fa-house" },
@@ -305,6 +305,7 @@ function App() {
   const [timelineFilter, setTimelineFilter] = useState("all");
   const [timelineProgress, setTimelineProgress] = useState(0);
   const [visibleTimelineItems, setVisibleTimelineItems] = useState([]);
+  const [securityAlertOpen, setSecurityAlertOpen] = useState(false);
   const [status, setStatus] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -312,7 +313,83 @@ function App() {
     message: "",
     feedback: "",
   });
+  const lastSecurityAlertAt = useRef(0);
   const typedText = useTypedWords(typedWords);
+
+  const showSecurityAlert = useCallback(() => {
+    const now = Date.now();
+
+    if (now - lastSecurityAlertAt.current < 1500) {
+      return;
+    }
+
+    lastSecurityAlertAt.current = now;
+    setSecurityAlertOpen(true);
+  }, []);
+
+  const closeSecurityAlert = useCallback(() => {
+    setSecurityAlertOpen(false);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("security-alert", showSecurityAlert);
+
+    return () => {
+      window.removeEventListener("security-alert", showSecurityAlert);
+    };
+  }, [showSecurityAlert]);
+
+  useEffect(() => {
+    if (!securityAlertOpen) {
+      return undefined;
+    }
+
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        closeSecurityAlert();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [closeSecurityAlert, securityAlertOpen]);
+
+  useEffect(() => {
+    const disableRightClick = (e) => {
+      e.preventDefault();
+      showSecurityAlert();
+    };
+
+    document.addEventListener("contextmenu", disableRightClick);
+
+    return () => {
+      document.removeEventListener("contextmenu", disableRightClick);
+    };
+  }, [showSecurityAlert]);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey &&
+          e.shiftKey &&
+          ["I", "J", "C"].includes(e.key.toUpperCase())) ||
+        (e.ctrlKey && e.key.toUpperCase() === "U")
+      ) {
+        e.preventDefault();
+        showSecurityAlert();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [showSecurityAlert]);
 
   const filteredTimeline = useMemo(
     () =>
@@ -421,6 +498,33 @@ function App() {
 
   return (
     <>
+      {securityAlertOpen && (
+        <div
+          aria-labelledby="security-alert-title"
+          aria-modal="true"
+          className="security-alert-backdrop"
+          role="dialog"
+        >
+          <div className="security-alert">
+            <div className="security-alert-icon" aria-hidden="true">
+              <i className="fa-solid fa-shield-halved" />
+            </div>
+            <h2 id="security-alert-title">Action Disabled</h2>
+            <p>
+              Developer tools, source viewing, and right-click actions are
+              disabled on this site.
+            </p>
+            <button
+              className="security-alert-button"
+              onClick={closeSecurityAlert}
+              type="button"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
+
       <nav id="navbar" className={isScrolled ? "scrolled" : ""}>
         <div className="nav-container">
           <a

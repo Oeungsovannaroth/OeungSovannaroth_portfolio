@@ -221,3 +221,81 @@
 .contact-form button {
   font: inherit;
 }
+
+.security-alert-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(8, 12, 18, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.security-alert {
+  width: min(420px, 100%);
+  padding: 30px 28px 26px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent),
+    #10151f;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
+}
+
+.security-alert-icon {
+  display: inline-grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: rgba(156, 209, 10, 0.14);
+  color: rgb(156, 209, 10);
+  font-size: 28px;
+}
+
+.security-alert h2 {
+  margin: 0 0 10px;
+  color: #ffffff;
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.security-alert p {
+  margin: 0 0 24px;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.security-alert-button {
+  min-width: 112px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: rgb(156, 209, 10);
+  color: #10151f;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.security-alert-button:hover {
+  background: rgb(177, 232, 24);
+  box-shadow: 0 12px 28px rgba(156, 209, 10, 0.26);
+  transform: translateY(-1px);
+}
+
+.security-alert-button:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.82);
+  outline-offset: 3px;
+}

@@ -1,10 +1,18 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import './App.css';
-import App from './App.jsx';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import DisableDevtool from "disable-devtool";
 
-createRoot(document.getElementById('root')).render(
+import App from "./App";
+import "./App.css";
+
+DisableDevtool({
+  ondevtoolopen: () => {
+    window.dispatchEvent(new CustomEvent("security-alert"));
+  },
+});
+
+createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
