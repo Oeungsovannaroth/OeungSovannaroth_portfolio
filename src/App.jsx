@@ -1,164 +1,276 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from "react";
 
 const navLinks = [
-  { href: '#home', label: 'Home', icon: 'fa-solid fa-house' },
-  { href: '#about', label: 'About', icon: 'fa-regular fa-folder' },
-  { href: '#skills', label: 'Skills', icon: 'fa-solid fa-code' },
-  { href: '#timeline', label: 'Resume', icon: 'fa-solid fa-briefcase' },
-  { href: '#contact', label: 'Contact', icon: 'fa-solid fa-phone' },
+  { href: "#home", label: "Home", icon: "fa-solid fa-house" },
+  { href: "#about", label: "About", icon: "fa-regular fa-folder" },
+  { href: "#skills", label: "Skills", icon: "fa-solid fa-code" },
+  { href: "#timeline", label: "Resume", icon: "fa-solid fa-briefcase" },
+  { href: "#contact", label: "Contact", icon: "fa-solid fa-phone" },
 ];
 
 const typedWords = [
-  'DESIGNER',
-  'FRONT-END DEVELOPER',
-  'ANDROID DEVELOPER',
-  'FREELANCER',
-  'PHOTOGRAPHER',
+  "DESIGNER",
+  "FRONT-END DEVELOPER",
+  "BACK-END DEVELOPER",
+  "APP DEVELOPER",
+  "FREELANCER",
+  "PHOTOGRAPHER",
 ];
 
 const serviceCards = [
   {
-    title: 'Website Development',
-    frontClass: 'card-front1',
-    backClass: 'card-back1',
+    title: "Web Application Development",
+    frontClass: "card-front1",
+    backClass: "card-back1",
     description:
-      'Crafting responsive, scalable, and visually appealing websites tailored to business needs.',
+      "Building responsive, scalable, and secure web applications using modern technologies and best development practices.",
   },
   {
-    title: 'UI/UX & Edit Video',
-    frontClass: 'card-front2',
-    backClass: 'card-back2',
+    title: "Backend Development & APIs",
+    frontClass: "card-front2",
+    backClass: "card-back2",
     description:
-      'Designing intuitive user interfaces and creating strong visual assets, branding materials, and layouts that deliver both function and beauty.',
+      "Developing robust RESTful APIs, implementing business logic, authentication, and seamless database integration.",
   },
   {
-    title: 'Content Creation',
-    frontClass: 'card-front3',
-    backClass: 'card-back3',
-    description: 'Creating educational and engaging content about tech, design, and development.',
+    title: "Database & System Design",
+    frontClass: "card-front3",
+    backClass: "card-back3",
+    description:
+      "Designing efficient database structures and scalable system architectures to ensure high performance and reliability.",
   },
 ];
 
 const devIcons = [
-  'devicon-csharp-plain colored',
-  'devicon-cplusplus-plain colored',
-  'devicon-microsoftsqlserver-plain-wordmark colored',
-  'devicon-mysql-plain-wordmark',
-  'devicon-html5-plain colored',
-  'devicon-css3-plain-wordmark',
-  'devicon-tailwindcss-original',
-  'devicon-javascript-plain colored',
-  'devicon-jquery-plain-wordmark colored',
-  'devicon-react-original-wordmark colored',
-  'devicon-bootstrap-plain-wordmark colored',
-  'devicon-github-original-wordmark',
-  'devicon-vercel-original',
-  'devicon-php-plain colored',
-  'devicon-laravel-original colored',
-  'devicon-python-plain colored',
-  'devicon-django-plain',
-  'devicon-figma-plain colored',
-  'devicon-kotlin-plain colored',
-  'devicon-dataspell-plain',
-  'devicon-mongodb-plain',
-  'devicon-postgresql-plain',
+  "devicon-csharp-plain colored",
+  "devicon-cplusplus-plain colored",
+  "devicon-microsoftsqlserver-plain-wordmark colored",
+  "devicon-mysql-plain-wordmark",
+  "devicon-html5-plain colored",
+  "devicon-css3-plain-wordmark",
+  "devicon-tailwindcss-original",
+  "devicon-javascript-plain colored",
+  "devicon-jquery-plain-wordmark colored",
+  "devicon-react-original-wordmark colored",
+  "devicon-bootstrap-plain-wordmark colored",
+  "devicon-github-original-wordmark",
+  "devicon-vercel-original",
+  "devicon-php-plain colored",
+  "devicon-laravel-original colored",
+  "devicon-python-plain colored",
+  "devicon-django-plain",
+  "devicon-figma-plain colored",
+  "devicon-kotlin-plain colored",
+  "devicon-dataspell-plain",
+  "devicon-mongodb-plain",
+  "devicon-postgresql-plain",
 ];
 
 const skillCards = [
   {
-    title: 'Frontend Excellence',
-    description: 'Modern JavaScript frameworks, responsive design, and pixel-perfect implementations',
+    title: "Full-Stack Development",
+    description:
+      "Building responsive web applications using modern frameworks, RESTful APIs, and scalable architectures.",
+    progress: 85,
+  },
+  {
+    title: "Software Engineering",
+    description:
+      "Writing clean, maintainable code, solving complex problems, and developing efficient, reliable software solutions.",
+    progress: 85,
+  },
+  {
+    title: "Database & API Integration",
+    description:
+      "Designing databases, integrating RESTful APIs, and managing data securely with SQL and NoSQL technologies.",
     progress: 80,
   },
   {
-    title: 'Creative Design',
-    description: 'User-centered design thinking with a focus on accessibility and visual appeal',
-    progress: 80,
+    title: "Problem Solving",
+    description:
+      "Analyzing requirements, debugging applications, and optimizing performance to deliver high-quality software.",
+    progress: 90,
   },
 ];
 
 const timelineItems = [
+  // Education
   {
-    category: 'education',
-    icon: 'fa-solid fa-graduation-cap',
-    year: '2018 - 2021',
-    title: 'Secondary School diploma',
-    company: 'Kampot krong high school',
+    category: "education",
+    icon: "fa-solid fa-graduation-cap",
+    year: "2021 - 2024",
+    title: "High School Diploma",
+    company: "Kampot Krong High School",
     description:
-      'Focused on general education with emphasis on science and technology subjects. Developed teamwork and communication skills through school projects and activities.',
-    achievements: ['Graduated with certificate of Appreciation.'],
+      "Completed secondary education with outstanding academic performance while actively participating in national Mathematics, Physics, and Chemistry competitions.",
+    achievements: [
+      "Graduated with Grade A in Grade 12",
+      "National competition awards in Mathematics, Physics, and Chemistry",
+    ],
   },
   {
-    category: 'education',
-    icon: 'fa-solid fa-graduation-cap',
-    year: '2024 - Present',
-    title: 'High School Diploma',
-    company: 'Kampot krong high school',
+    category: "education",
+    icon: "fa-solid fa-graduation-cap",
+    year: "2024 - Present",
+    title: "Bachelor of Computer Science and Engineering",
+    company: "ACLEDA University of Business",
     description:
-      'Graduated with a concentration in business and computing. Gained experience in research, presentations, and critical thinking.',
-    achievements: ['Graduated with a Diploma in Grade 12 with an overall Grade A.'],
+      "Currently pursuing a degree in Computer Science and Engineering with a focus on software engineering, web development, databases, and mobile application development.",
+    achievements: [
+      "Completed Year 2",
+      "Current GPA: 3.7 / 4.0",
+    ],
   },
   {
-    category: 'education',
-    icon: 'fa-solid fa-graduation-cap',
-    year: '2021 - 2024',
-    title: 'Bachelor of Computer Science and Engineering',
-    company: 'Aceleda university of bussiness',
+    category: "education",
+    icon: "fa-solid fa-graduation-cap",
+    year: "2025 - Present",
+    title: "English Program",
+    company: "Australian Centre for Education (ACE)",
     description:
-      'Currently pursuing studies in computer science, software development, and programming. Developing skills in web technologies, databases, and problem-solving for real-world applications.',
-    achievements: ['Achieved a 4.0 GPA during the first academic year.'],
+      "Developing English communication, presentation, and professional writing skills for academic and professional environments.",
+    achievements: [],
+  },
+
+  // Work Experience
+  {
+    category: "work",
+    icon: "fa-solid fa-briefcase",
+    year: "Oct 2025 - Present",
+    title: "Software Developer Intern",
+    company: "ACLEDA University of Business",
+    description:
+      "Developed RESTful APIs using C#, ASP.NET Core, and Entity Framework Core. Implemented CRUD operations, integrated SQL Server, performed API testing with Postman, and collaborated with front-end developers.",
+    skills: [
+      "C#",
+      "ASP.NET Core",
+      "Entity Framework Core",
+      "SQL Server",
+      "REST API",
+      "Postman",
+    ],
   },
   {
-    category: 'project',
-    icon: 'fa-solid fa-rocket',
-    year: '2025',
-    title: 'iSTUDIO',
-    company: 'Personal Project',
+    category: "work",
+    icon: "fa-solid fa-briefcase",
+    year: "Nov 2025 - May 2026",
+    title: "Backend Developer Intern",
+    company: "ICT Center",
     description:
-      'iSTUDIO focuses on delivering sleek, user-friendly interfaces and interactive digital experiences for clients.',
-    achievements: ['1,000+ active users', '4.2/5 star rating'],
+      "Developed backend services using Laravel and PHP, designed databases, integrated RESTful APIs, implemented authentication, optimized application performance, and collaborated with cross-functional teams.",
+    skills: [
+      "Laravel",
+      "PHP",
+      "MySQL",
+      "REST API",
+      "Git",
+      "Backend Development",
+    ],
+  },
+
+  // Projects
+  {
+    category: "project",
+    icon: "fa-solid fa-rocket",
+    year: "2026",
+    title: "SolarOps Energy Tracker",
+    company: "ICT Center",
+    description:
+      "Developed a full-stack energy management system featuring role-based authentication, email OTP verification, ABA Bakong payment integration, electricity usage monitoring, customer management, inventory tracking, and reporting using React.js, Laravel, and MongoDB.",
+    achievements: [
+      "React.js",
+      "Laravel",
+      "MongoDB",
+      "Bakong API",
+      "Email OTP",
+    ],
   },
   {
-    category: 'project',
-    icon: 'fa-solid fa-rocket',
-    year: '2025',
-    title: 'VPuppy Land',
-    company: 'Personal Project',
+    category: "project",
+    icon: "fa-solid fa-rocket",
+    year: "2026",
+    title: "Travel Guide Mobile Application",
+    company: "Academic Project",
     description:
-      'Puppy Land offers information on different dog breeds, pet care tips, adoption services, and an interactive community for pet lovers.',
-    achievements: ['100+ active users', '4.2/5 star rating'],
+      "Built a full-stack travel guide platform consisting of an Android application, Laravel REST APIs, and a React.js admin dashboard with Firebase integration.",
+    achievements: [
+      "Kotlin",
+      "Jetpack Compose",
+      "Laravel",
+      "React.js",
+      "MySQL",
+      "Firebase",
+    ],
   },
   {
-    category: 'project',
-    icon: 'fa-solid fa-rocket',
-    year: '2025',
-    title: 'VILLA AGENCY',
-    company: 'Personal Project',
+    category: "project",
+    icon: "fa-solid fa-rocket",
+    year: "2026",
+    title: "Pub Management System",
+    company: "Academic Project",
     description:
-      'Villa Agency allows users to browse listings, view high-quality images, and contact agents directly for buying, renting, or investing in villas.',
-    achievements: ['10,000+ active users', '4.8/5 star rating'],
+      "Developed a restaurant management system with menu management, recipes, inventory tracking, customer orders, automatic stock deduction, and reporting.",
+    achievements: [
+      "React.js",
+      "Laravel",
+      "MongoDB",
+      "REST API",
+    ],
   },
   {
-    category: 'work',
-    icon: 'fa-solid fa-briefcase',
-    year: '2025 - Present',
-    title: 'Frontend Developer',
-    company: 'ICT Center',
+    category: "project",
+    icon: "fa-solid fa-rocket",
+    year: "2026",
+    title: "BenLan Management System",
+    company: "Academic Project",
     description:
-      'Started my professional journey building responsive web applications for startup clients. Learned to work in fast-paced environments and collaborate effectively with cross-functional teams.',
-    skills: ['React', 'JavaScript', 'Jquery', 'Git'],
+      "Developed backend RESTful APIs using ASP.NET Core, Entity Framework Core, and SQL Server with CRUD operations and API testing.",
+    achievements: [
+      "ASP.NET Core",
+      "C#",
+      "SQL Server",
+      "Entity Framework Core",
+    ],
+  },
+  {
+    category: "project",
+    icon: "fa-solid fa-rocket",
+    year: "2025",
+    title: "ICT Shop & PuppyLand",
+    company: "Personal Project",
+    description:
+      "Built responsive e-commerce websites with reusable React components, shopping cart functionality, product filtering, and modern UI using Tailwind CSS.",
+    achievements: [
+      "React.js",
+      "Tailwind CSS",
+      "JavaScript",
+    ],
+  },
+  {
+    category: "project",
+    icon: "fa-solid fa-rocket",
+    year: "2025",
+    title: "Hotel Management System",
+    company: "Academic Project",
+    description:
+      "Developed a desktop application for hotel room booking and customer management using Java Swing with SQL Server database integration.",
+    achievements: [
+      "Java",
+      "Java Swing",
+      "SQL Server",
+    ],
   },
 ];
 
 function useTypedWords(words) {
   const [wordIndex, setWordIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const currentWord = words[wordIndex];
     const isWordComplete = !isDeleting && displayText === currentWord;
-    const isWordDeleted = isDeleting && displayText === '';
+    const isWordDeleted = isDeleting && displayText === "";
     const delay = isWordComplete ? 1800 : isDeleting ? 45 : 95;
 
     const timeoutId = window.setTimeout(() => {
@@ -174,7 +286,9 @@ function useTypedWords(words) {
       }
 
       setDisplayText((text) =>
-        isDeleting ? currentWord.slice(0, text.length - 1) : currentWord.slice(0, text.length + 1),
+        isDeleting
+          ? currentWord.slice(0, text.length - 1)
+          : currentWord.slice(0, text.length + 1),
       );
     }, delay);
 
@@ -185,23 +299,25 @@ function useTypedWords(words) {
 }
 
 function App() {
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
-  const [timelineFilter, setTimelineFilter] = useState('all');
+  const [timelineFilter, setTimelineFilter] = useState("all");
   const [timelineProgress, setTimelineProgress] = useState(0);
   const [visibleTimelineItems, setVisibleTimelineItems] = useState([]);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-    feedback: '',
+    name: "",
+    email: "",
+    message: "",
+    feedback: "",
   });
   const typedText = useTypedWords(typedWords);
 
   const filteredTimeline = useMemo(
     () =>
-      timelineItems.filter((item) => timelineFilter === 'all' || item.category === timelineFilter),
+      timelineItems.filter(
+        (item) => timelineFilter === "all" || item.category === timelineFilter,
+      ),
     [timelineFilter],
   );
 
@@ -210,14 +326,16 @@ function App() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            entry.target.classList.add("visible");
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' },
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" },
     );
 
-    document.querySelectorAll('.fade-in').forEach((element) => revealObserver.observe(element));
+    document
+      .querySelectorAll(".fade-in")
+      .forEach((element) => revealObserver.observe(element));
 
     return () => revealObserver.disconnect();
   }, []);
@@ -226,7 +344,7 @@ function App() {
     const updateOnScroll = () => {
       setIsScrolled(window.scrollY > 100);
 
-      document.querySelectorAll('section[id]').forEach((section) => {
+      document.querySelectorAll("section[id]").forEach((section) => {
         const sectionTop = section.offsetTop - 120;
         const sectionBottom = sectionTop + section.offsetHeight;
 
@@ -235,20 +353,24 @@ function App() {
         }
       });
 
-      const timelineContainer = document.querySelector('.timeline-container');
+      const timelineContainer = document.querySelector(".timeline-container");
       if (timelineContainer) {
         const rect = timelineContainer.getBoundingClientRect();
         const progress = Math.max(
           0,
-          Math.min(1, (window.innerHeight - rect.top) / (rect.height + window.innerHeight)),
+          Math.min(
+            1,
+            (window.innerHeight - rect.top) /
+              (rect.height + window.innerHeight),
+          ),
         );
         setTimelineProgress(progress * 100);
       }
     };
 
     updateOnScroll();
-    window.addEventListener('scroll', updateOnScroll, { passive: true });
-    return () => window.removeEventListener('scroll', updateOnScroll);
+    window.addEventListener("scroll", updateOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", updateOnScroll);
   }, []);
 
   useEffect(() => {
@@ -259,12 +381,15 @@ function App() {
       }, index * 120),
     );
 
-    return () => timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    return () =>
+      timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
   }, [filteredTimeline]);
 
   const handleAnchorClick = (event, href) => {
     event.preventDefault();
-    document.querySelector(href.trim())?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document
+      .querySelector(href.trim())
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleFormChange = (event) => {
@@ -274,30 +399,34 @@ function App() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setStatus('Sending message...');
+    setStatus("Sending message...");
 
     const telegramMessage = encodeURIComponent(
       `New Contact Message:\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}\nFeedback: ${formData.feedback}`,
     );
-    const botToken = '8381888400:AAEFOZ6OtLH1kWCEoM4h-ap8BXHENHEWVFs';
-    const chatId = '1369212693';
+    const botToken = "8381888400:AAEFOZ6OtLH1kWCEoM4h-ap8BXHENHEWVFs";
+    const chatId = "1369212693";
 
     try {
       await fetch(
         `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${telegramMessage}`,
       );
-      setStatus('Message sent successfully!');
-      setFormData({ name: '', email: '', message: '', feedback: '' });
+      setStatus("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "", feedback: "" });
     } catch {
-      setStatus('Failed to send message!');
+      setStatus("Failed to send message!");
     }
   };
 
   return (
     <>
-      <nav id="navbar" className={isScrolled ? 'scrolled' : ''}>
+      <nav id="navbar" className={isScrolled ? "scrolled" : ""}>
         <div className="nav-container">
-          <a className="logo" href="#home" onClick={(event) => handleAnchorClick(event, '#home')}>
+          <a
+            className="logo"
+            href="#home"
+            onClick={(event) => handleAnchorClick(event, "#home")}
+          >
             <div className="logo-icon" />
             <div className="logo-text" />
           </a>
@@ -306,7 +435,9 @@ function App() {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  className={activeSection === link.href.slice(1) ? 'active' : ''}
+                  className={
+                    activeSection === link.href.slice(1) ? "active" : ""
+                  }
                   href={link.href}
                   onClick={(event) => handleAnchorClick(event, link.href)}
                 >
@@ -321,7 +452,7 @@ function App() {
           {navLinks.map((link) => (
             <a
               aria-label={link.label}
-              className={activeSection === link.href.slice(1) ? 'active' : ''}
+              className={activeSection === link.href.slice(1) ? "active" : ""}
               href={link.href}
               key={link.href}
               onClick={(event) => handleAnchorClick(event, link.href)}
@@ -360,14 +491,14 @@ function App() {
               <a
                 className="cta-primary"
                 href="#skills"
-                onClick={(event) => handleAnchorClick(event, '#skills')}
+                onClick={(event) => handleAnchorClick(event, "#skills")}
               >
                 TECHNOLOGIES
               </a>
               <a
                 className="cta-secondary"
                 href="#contact"
-                onClick={(event) => handleAnchorClick(event, '#contact')}
+                onClick={(event) => handleAnchorClick(event, "#contact")}
               >
                 Let's Talk
               </a>
@@ -391,10 +522,13 @@ function App() {
             <div className="section-header">
               <h2 className="section-title">About Me</h2>
               <p className="section-subtitle">
-                I'm a front-end developer passionate about creating modern, responsive, and
-                user-friendly websites. I enjoy turning ideas into real digital experiences using
-                clean code, creativity, and problem-solving. I am always learning new technologies
-                and improving my UI/UX skills to build better products.
+                I'm a Web Developer passionate about creating modern,
+                responsive, and user-friendly web applications. I enjoy
+                transforming ideas into complete digital solutions by combining
+                front-end and back-end development with clean code, creativity,
+                and problem-solving. I am always learning new technologies and
+                improving my skills to build efficient, scalable, and
+                high-quality web products.
               </p>
             </div>
 
@@ -403,13 +537,16 @@ function App() {
                 <div className="about-image" />
                 <div className="about-text">
                   <p>
-                    I'm Sovannaroth, a passionate Front-End Developer focused on crafting beautiful,
-                    functional, and user-centered websites. I bring ideas to life through clean code,
-                    thoughtful design, and animation.
+                    I'm Sovannaroth, a passionate Web Developer focused on
+                    building modern, functional, and user-centered web
+                    applications. I bring ideas to life through clean code,
+                    thoughtful design, and efficient development.
                   </p>
                   <p>
-                    I design and build digital experiences that turn imagination into reality,
-                    blending creativity, smooth interactions, and modern web technologies.
+                    I design and develop digital experiences that turn ideas
+                    into reality, combining creativity, seamless user
+                    experiences, and modern web technologies to build
+                    responsive, scalable, and high-quality web solutions.
                   </p>
                 </div>
               </div>
@@ -447,7 +584,9 @@ function App() {
           <div className="container">
             <div className="section-header">
               <h2 className="section-title">SKILLS & TECHNOLOGIES</h2>
-              <p className="section-subtitle">Combining technical excellence with creative vision.</p>
+              <p className="section-subtitle">
+                Combining technical excellence with creative vision.
+              </p>
             </div>
 
             <div className="skills-container">
@@ -455,9 +594,16 @@ function App() {
                 <div className="skills-visual">
                   <div className="skills-circle">
                     <div className="banner">
-                      <div className="slider" style={{ '--quantity': devIcons.length }}>
+                      <div
+                        className="slider"
+                        style={{ "--quantity": devIcons.length }}
+                      >
                         {devIcons.map((icon, index) => (
-                          <div className="item" key={icon} style={{ '--position': index + 1 }}>
+                          <div
+                            className="item"
+                            key={icon}
+                            style={{ "--position": index + 1 }}
+                          >
                             <i className={icon} />
                           </div>
                         ))}
@@ -490,34 +636,42 @@ function App() {
             <div className="section-header">
               <h2 className="section-title">Resume</h2>
               <p className="section-subtitle">
-                Driven front-end developer focused on transforming ideas into digital reality.
-                Experienced in creating responsive layouts, modern interfaces, and interactive web
-                animations. Passionate about continuous learning, problem-solving, and building
-                clean, user-centered digital experiences.
+                Passionate Software Developer with experience in designing and
+                developing modern web applications. Skilled in building
+                responsive user interfaces, developing secure backend systems,
+                integrating RESTful APIs, and managing databases. Dedicated to
+                writing clean, maintainable code, solving complex problems, and
+                continuously learning new technologies to create scalable and
+                high-quality software solutions.
               </p>
             </div>
 
             <div className="timeline-controls">
-              {['all', 'education', 'work', 'project'].map((filter) => (
+              {["all", "education", "work", "project"].map((filter) => (
                 <button
-                  className={`timeline-filter ${timelineFilter === filter ? 'active' : ''}`}
+                  className={`timeline-filter ${timelineFilter === filter ? "active" : ""}`}
                   key={filter}
                   onClick={() => setTimelineFilter(filter)}
                   type="button"
                 >
-                  {filter === 'all' ? 'All' : filter[0].toUpperCase() + filter.slice(1)}
+                  {filter === "all"
+                    ? "All"
+                    : filter[0].toUpperCase() + filter.slice(1)}
                 </button>
               ))}
             </div>
 
             <div className="timeline-container">
               <div className="timeline-line" />
-              <div className="timeline-progress" style={{ height: `${timelineProgress}%` }} />
+              <div
+                className="timeline-progress"
+                style={{ height: `${timelineProgress}%` }}
+              />
 
               {filteredTimeline.map((item, index) => (
                 <div
                   className={`timeline-item ${
-                    visibleTimelineItems.includes(index) ? 'visible' : ''
+                    visibleTimelineItems.includes(index) ? "visible" : ""
                   }`}
                   data-category={item.category}
                   key={`${item.title}-${item.year}`}
@@ -527,8 +681,11 @@ function App() {
                     className="timeline-node"
                     onClick={(event) =>
                       event.currentTarget
-                        .closest('.timeline-item')
-                        ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                        .closest(".timeline-item")
+                        ?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        })
                     }
                     type="button"
                   >
@@ -543,7 +700,10 @@ function App() {
                     {item.achievements && (
                       <div className="timeline-achievements">
                         {item.achievements.map((achievement) => (
-                          <div className="timeline-achievement" key={achievement}>
+                          <div
+                            className="timeline-achievement"
+                            key={achievement}
+                          >
                             {achievement}
                           </div>
                         ))}
@@ -579,9 +739,10 @@ function App() {
               <div className="contact-info">
                 <h3>Get In Touch</h3>
                 <p>
-                  I'm always excited to work on new projects and collaborate with amazing people.
-                  Whether you have a specific project in mind or just want to explore possibilities,
-                  I'd love to hear from you.
+                  I'm always excited to work on new projects and collaborate
+                  with amazing people. Whether you have a specific project in
+                  mind or just want to explore possibilities, I'd love to hear
+                  from you.
                 </p>
 
                 <div className="contact-details">
