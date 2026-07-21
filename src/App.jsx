@@ -64,6 +64,7 @@ const devIcons = [
   "devicon-dataspell-plain",
   "devicon-mongodb-plain",
   "devicon-postgresql-plain",
+  "devicon-flutter-plain",
 ];
 
 const skillCards = [
