@@ -313,8 +313,16 @@ function App() {
     message: "",
     feedback: "",
   });
+  const [flippedCards, setFlippedCards] = useState({});
   const lastSecurityAlertAt = useRef(0);
   const typedText = useTypedWords(typedWords);
+
+  const toggleCardFlip = (title) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [title]: !prev[title],
+    }));
+  };
 
   const showSecurityAlert = useCallback(() => {
     const now = Date.now();
@@ -359,6 +367,10 @@ function App() {
 
   useEffect(() => {
     const disableRightClick = (e) => {
+      // Do not block touch/phone long-press gestures to prevent UI from freezing
+      if (e.pointerType === "touch") {
+        return;
+      }
       e.preventDefault();
       showSecurityAlert();
     };
@@ -408,7 +420,7 @@ function App() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" },
+      { threshold: 0.01, rootMargin: "0px 0px 50px 0px" },
     );
 
     document
@@ -465,9 +477,16 @@ function App() {
 
   const handleAnchorClick = (event, href) => {
     event.preventDefault();
-    document
-      .querySelector(href.trim())
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const target = document.querySelector(href.trim());
+    if (target) {
+      const navEl = document.querySelector("#navbar");
+      const navOffset = navEl ? navEl.offsetHeight + 10 : 80;
+      const targetPos = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+      window.scrollTo({
+        top: Math.max(0, targetPos),
+        behavior: "smooth",
+      });
+    }
   };
 
   const handleFormChange = (event) => {
@@ -663,7 +682,19 @@ function App() {
 
                 <section className="card-do" aria-label="Services">
                   {serviceCards.map((card) => (
-                    <div className="card1" key={card.title}>
+                    <div
+                      className={`card1 ${flippedCards[card.title] ? "is-flipped" : ""}`}
+                      key={card.title}
+                      onClick={() => toggleCardFlip(card.title)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          toggleCardFlip(card.title);
+                        }
+                      }}
+                    >
                       <div className="card-inner1">
                         <div className="card-frond-all">
                           <div className={card.frontClass}>
